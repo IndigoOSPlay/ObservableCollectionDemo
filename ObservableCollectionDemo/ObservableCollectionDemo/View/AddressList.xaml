@@ -1,0 +1,138 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:ObservableCollectionDemo"
+             xmlns:common="clr-namespace:Telerik.XamarinForms.Common;assembly=Telerik.XamarinForms.Common"
+             xmlns:telerikInput="clr-namespace:Telerik.XamarinForms.Input;assembly=Telerik.XamarinForms.Input"
+             xmlns:telerikDataGrid="clr-namespace:Telerik.XamarinForms.DataGrid;assembly=Telerik.XamarinForms.DataGrid"
+             xmlns:telerikGrid="clr-namespace:Telerik.XamarinForms.DataGrid;assembly=Telerik.XamarinForms.DataGrid"
+             xmlns:telerikPrimitives="clr-namespace:Telerik.XamarinForms.Primitives;assembly=Telerik.XamarinForms.Primitives"
+             xmlns:telerikCommon="clr-namespace:Telerik.XamarinForms.Common;assembly=Telerik.XamarinForms.Common"
+             xmlns:telerikDataControls="clr-namespace:Telerik.XamarinForms.DataControls;assembly=Telerik.XamarinForms.DataControls"
+             xmlns:telerikListView="clr-namespace:Telerik.XamarinForms.DataControls.ListView;assembly=Telerik.XamarinForms.DataControls"     
+             xmlns:checkBoxComamnds="clr-namespace:Telerik.XamarinForms.Primitives.CheckBox.Commands;assembly=Telerik.XamarinForms.Primitives"
+             xmlns:numericInput="clr-namespace:Telerik.XamarinForms.Input.NumericInput;assembly=Telerik.XamarinForms.Input"
+             x:Class="ObservableCollectionDemo.AddressList">
+
+    <!-- AddressGrid -->
+    <Grid x:Name="AddressGrid" IsVisible="True" >
+        <StackLayout Orientation="Vertical">
+            <StackLayout Margin="20,0,20,0">
+                <Grid>
+                    <telerikGrid:RadDataGrid x:Name="TAddressListNew" LoadOnDemandMode="Automatic" LoadOnDemandBufferItemsCount="5"
+                        AutoGenerateColumns="False" SelectionMode="None" UserEditMode="Cell" HeightRequest="400" >
+                        <telerikGrid:RadDataGrid.AlternateRowBackgroundStyle>
+                            <telerikDataGrid:DataGridBorderStyle BorderThickness="1"
+                                                                 BorderColor="BlanchedAlmond" >
+                            </telerikDataGrid:DataGridBorderStyle>
+                        </telerikGrid:RadDataGrid.AlternateRowBackgroundStyle>
+                        <telerikGrid:RadDataGrid.Columns>
+                            <telerikGrid:DataGridTemplateColumn HeaderText="Name">
+                                <telerikGrid:DataGridTemplateColumn.CellContentTemplate>
+                                    <DataTemplate>
+                                        <Label Text="{Binding Name}" />
+                                    </DataTemplate>
+                                </telerikGrid:DataGridTemplateColumn.CellContentTemplate>
+                            </telerikGrid:DataGridTemplateColumn>
+                            <telerikGrid:DataGridTemplateColumn HeaderText="Main Address" >
+                                <telerikGrid:DataGridTemplateColumn.CellContentTemplate>
+                                    <DataTemplate>
+                                        <Grid ColumnSpacing="0" RowSpacing="0">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="32"></RowDefinition>
+                                                <RowDefinition Height="32"></RowDefinition>
+                                            </Grid.RowDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="150"/>
+                                                <ColumnDefinition Width="*"/>
+
+                                            </Grid.ColumnDefinitions>
+                                            <Label Text="{Binding Building}"  Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" />
+                                            <Label Text="{Binding Street}"   Grid.Row="1" Grid.Column="0" />
+                                        </Grid>
+                                    </DataTemplate>
+                                </telerikGrid:DataGridTemplateColumn.CellContentTemplate>
+                            </telerikGrid:DataGridTemplateColumn>
+                            <telerikGrid:DataGridTemplateColumn HeaderText="Region" Width="200">
+                                <telerikGrid:DataGridTemplateColumn.HeaderStyle>
+                                    <telerikGrid:DataGridColumnHeaderStyle
+                                                                            OptionsButtonTextColor="Transparent"
+                                                                            BorderThickness="1"
+                                                                            HorizontalTextAlignment="Start"
+                                                                            VerticalTextAlignment="Center" >
+                                    </telerikGrid:DataGridColumnHeaderStyle>
+                                </telerikGrid:DataGridTemplateColumn.HeaderStyle>
+                                <telerikGrid:DataGridTemplateColumn.CellContentTemplate>
+                                    <DataTemplate>
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="32"></RowDefinition>
+                                                <RowDefinition Height="32"></RowDefinition>
+                                            </Grid.RowDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Label Text="{Binding City}"  Grid.Row="0" Grid.Column="0" />
+                                            <Label Text="{Binding Region}"   Grid.Row="1" Grid.Column="0" />
+                                        </Grid>
+                                    </DataTemplate>
+                                </telerikGrid:DataGridTemplateColumn.CellContentTemplate>
+                            </telerikGrid:DataGridTemplateColumn>
+                            <telerikGrid:DataGridTemplateColumn HeaderText="PostalCode" Width="200">
+                                <telerikGrid:DataGridTemplateColumn.HeaderStyle>
+                                    <telerikGrid:DataGridColumnHeaderStyle
+                                                                            OptionsButtonTextColor="Transparent"
+                                                                            BorderThickness="1"
+                                                                            HorizontalTextAlignment="Start"
+                                                                            VerticalTextAlignment="Center" >
+                                    </telerikGrid:DataGridColumnHeaderStyle>
+                                </telerikGrid:DataGridTemplateColumn.HeaderStyle>
+                                <telerikGrid:DataGridTemplateColumn.CellContentTemplate>
+                                    <DataTemplate>
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="32"></RowDefinition>
+                                                <RowDefinition Height="32"></RowDefinition>
+                                            </Grid.RowDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Label Text="{Binding Country}" Grid.Column="0" Grid.Row="0"></Label>
+                                            <Picker ItemsSource="{Binding PostalCodePick}" SelectedIndexChanged="Picker_SelectedIndexChanged" Grid.Row="1" Grid.Column="0" />
+                                        </Grid>
+                                    </DataTemplate>
+                                </telerikGrid:DataGridTemplateColumn.CellContentTemplate>
+                            </telerikGrid:DataGridTemplateColumn>
+                            <telerikGrid:DataGridTemplateColumn HeaderText="Total Price">
+                                <telerikGrid:DataGridTemplateColumn.HeaderStyle>
+                                    <telerikGrid:DataGridColumnHeaderStyle
+                                                                            OptionsButtonTextColor="Transparent"
+                                                                            BorderThickness="1"
+                                                                            HorizontalTextAlignment="Start"
+                                                                            VerticalTextAlignment="Center" >
+                                    </telerikGrid:DataGridColumnHeaderStyle>
+                                </telerikGrid:DataGridTemplateColumn.HeaderStyle>
+                                <telerikGrid:DataGridTemplateColumn.CellContentTemplate>
+                                    <DataTemplate>
+                                        <Grid RowSpacing="0" ColumnSpacing="0">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="32"/>
+                                                <RowDefinition Height="32"/>
+                                            </Grid.RowDefinitions>
+                                            <Label Text="{Binding Phone}" Grid.Row="0" Grid.Column="0" HorizontalTextAlignment="End"  />
+                                            <Label Text="{Binding PostalCode}" Grid.Column="0" Grid.Row="1" HorizontalTextAlignment="End"></Label>
+                                        </Grid>
+                                    </DataTemplate>
+                                </telerikGrid:DataGridTemplateColumn.CellContentTemplate>
+                            </telerikGrid:DataGridTemplateColumn>
+                        </telerikGrid:RadDataGrid.Columns>
+                    </telerikGrid:RadDataGrid>
+                </Grid>
+            </StackLayout>
+        </StackLayout>
+    </Grid>
+
+</ContentView>
