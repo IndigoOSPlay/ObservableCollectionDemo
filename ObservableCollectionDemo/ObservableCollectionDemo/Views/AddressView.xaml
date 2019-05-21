@@ -12,7 +12,7 @@
              xmlns:telerikListView="clr-namespace:Telerik.XamarinForms.DataControls.ListView;assembly=Telerik.XamarinForms.DataControls"     
              xmlns:checkBoxComamnds="clr-namespace:Telerik.XamarinForms.Primitives.CheckBox.Commands;assembly=Telerik.XamarinForms.Primitives"
              xmlns:numericInput="clr-namespace:Telerik.XamarinForms.Input.NumericInput;assembly=Telerik.XamarinForms.Input"
-             x:Class="ObservableCollectionDemo.AddressList">
+             x:Class="ObservableCollectionDemo.AddressView">
 
     <!-- AddressGrid -->
     <Grid x:Name="AddressGrid" IsVisible="True" >

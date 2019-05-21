@@ -19,39 +19,62 @@
 **/
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-
-using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
-
 using Telerik.XamarinForms.DataGrid;
 
+using Xamarin.Forms;
+
 namespace ObservableCollectionDemo {
-    [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class AddressList : ContentView {
-        AddressListViewModel m_vmViewModel;
+    public class AddressViewModel {
 
-        public AddressList() {
-            this.m_vmViewModel = new AddressListViewModel();
+        List<AddressBinding> mAddressFullList;
 
-            InitializeComponent();
+        /** Our observable collection. **/
+        public AddressCollection ModelAddressOList;
+        public int currentPage;
+        public int itemsPerPage;
 
-            TAddressListNew.ItemsSource = null;
-            TAddressListNew.ItemsSource = this.m_vmViewModel.ModelAddressOList;
+        public AddressViewModel() {
+            AddressData addData = new AddressData();
+            this.currentPage = 0;
+            this.itemsPerPage = 5;
+            this.mAddressFullList = null;
+            this.ModelAddressOList = new AddressCollection();
+            this.mAddressFullList = addData.GetAddressFullList();
         }
 
-        public void OnAppearing() {
-            this.TAddressListNew.LoadOnDemand += TAddressListNew_LoadOnDemand;
+        private List<AddressBinding> GetAddressItemsSelector(int pageToGet, int itemsToFetch)
+        {
+            List<AddressBinding> addressSelector = null;
+            if (this.mAddressFullList != null) {
+                addressSelector = this.mAddressFullList.Skip(itemsToFetch * (pageToGet - 1)).Take(itemsToFetch).ToList();
+            }
+            return addressSelector;
         }
 
-        private void Picker_SelectedIndexChanged(object sender, EventArgs e) {
+        public bool AddNextDemandBatch(ref LoadOnDemandEventArgs e) {
+            this.currentPage++;
+            List<AddressBinding> lstAddressItemsSelector = GetAddressItemsSelector(this.currentPage, this.itemsPerPage);
+
+            e.IsDataLoaded = true;
+
+            if (lstAddressItemsSelector != null && lstAddressItemsSelector.Count > 0) {
+                foreach (var objAddressItemsSelector in lstAddressItemsSelector) {
+                    this.ModelAddressOList.Add(objAddressItemsSelector);
+                }
+                return true;
+            }
+            return false;
+        }
+
+        public void HandlePickerChanges(ref object sender) {
             var zipPicker = (Picker)sender;
             if (zipPicker != null)
             {
-                Address addressItem = (Address)zipPicker.BindingContext;
+                AddressBinding addressItem = (AddressBinding)zipPicker.BindingContext;
 
                 var currentSelectedZip = zipPicker.SelectedItem;
                 if (currentSelectedZip != null)
@@ -119,11 +142,10 @@ namespace ObservableCollectionDemo {
                 }
             }
         }
-        private void TAddressListNew_LoadOnDemand(object sender, LoadOnDemandEventArgs e) {
-            if (!this.m_vmViewModel.AddNextDemandBatch()) {
-                this.TAddressListNew.LoadOnDemand -= TAddressListNew_LoadOnDemand;
-            }
-            e.IsDataLoaded = true;
+    }
+
+    public class AddressCollection : ObservableCollection<AddressBinding> {
+        public AddressCollection() : base() {
         }
     }
 }

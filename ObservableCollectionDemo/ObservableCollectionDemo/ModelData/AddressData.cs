@@ -7,16 +7,16 @@ namespace ObservableCollectionDemo {
         public AddressData() {
         }
 
-        public List <Address> GetAddressFullList() {
-            List <Address> addressListReturned = new List<Address>();
+        public List <AddressBinding> GetAddressFullList() {
+            List <AddressBinding> addressListReturned = new List<AddressBinding>();
             int nStartIndex = 0;
-            Address anAddress = null;
+            AddressBinding anAddress = null;
             AddressData ad = new AddressData();
 
             foreach (var addr in addressesGiven) {
                 switch (nStartIndex) {
                     case 0:
-                        anAddress = new Address();
+                        anAddress = new AddressBinding();
                         anAddress.Name = addr;
                         break;
                     case 1:

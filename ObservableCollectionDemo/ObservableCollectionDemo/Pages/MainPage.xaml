@@ -4,6 +4,6 @@
              xmlns:local="clr-namespace:ObservableCollectionDemo"
              x:Class="ObservableCollectionDemo.MainPage">
     <Grid>
-        <local:AddressList x:Name="TAddressListView" />
+        <local:AddressView x:Name="TAddressListView" />
     </Grid>
 </ContentPage>

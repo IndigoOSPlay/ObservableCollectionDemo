@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Text;
 
 namespace ObservableCollectionDemo {
-    public class Address : INotifyPropertyChanged {
+    public class AddressBinding : INotifyPropertyChanged {
         public event PropertyChangedEventHandler PropertyChanged;
 
         public enum RegionType {
@@ -36,7 +36,7 @@ namespace ObservableCollectionDemo {
         public RegionType RegionTypeEnumValue { get; set; }
         public List<string> PostalCodePick { get; set; }
 
-        public Address() {
+        public AddressBinding() {
             RegionTypeEnumValue = RegionType.RegionTypeState;
             if (PropertyChanged != null) {
                 PropertyChanged(this, new PropertyChangedEventArgs("Name"));
